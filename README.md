@@ -36,7 +36,8 @@ door-window-cabinet-mall
 ├── pom.xml                         # Maven父工程
 ├── ambry-common                    # 实体、请求、返回、枚举、工具类、统一返回、异常
 ├── ambry-config                    # 权限、Redis、MySQL、MyBatis、文件、跨域、Knife4j配置
-├── ambry-business                  # 核心业务接口、实现、Controller、Mapper、mapper.xml
+├── ambry-integration               # 第三方系统对接、Feign Client、Feign拦截器
+├── ambry-business                  # Controller、Manager、Service、Mapper、mapper.xml
 └── ambry-admin                     # 启动模块、application.yml、数据库初始化脚本
 ```
 
@@ -44,10 +45,25 @@ door-window-cabinet-mall
 
 ### 模块说明
 
-- `ambry-common`：统一存放实体、请求对象、返回对象、枚举、常量、工具类、统一返回和业务异常，不使用 `dto`、`vo` 包名。
-- `ambry-config`：统一存放全局配置，包括 MyBatis Plus、Mapper 扫描、跨域、文件上传、权限参数和 Knife4j。
-- `ambry-business`：按业务能力拆分 `system.region`、`system.dict`、`goods`、`pricing`、`order` 等包，Mapper XML 放在本模块 `src/main/resources/mapper/**`。
+- `ambry-common`：统一存放实体、请求对象、返回对象、分页模型、用户上下文、枚举、常量、工具类、统一返回和业务异常，不使用 `dto`、`vo` 包名；表实体统一以 `Entity` 结尾。
+- `ambry-config`：统一存放全局配置，包括 MyBatis Plus、Mapper 扫描、分页插件、BaseEntity 自动填充、跨域、文件上传、JWT、角色权限拦截器、Knife4j 和全局异常。
+- `ambry-integration`：统一存放第三方系统对接能力，例如 Feign Client、Feign 请求拦截器、短信/支付/物流等外部接口。
+- `ambry-business`：按 `controller -> manager -> service -> mapper` 分层。Controller 只调用 Manager，Service 基于 MyBatis Plus `IService/ServiceImpl`，Mapper XML 放在本模块 `src/main/resources/mapper/**`。
 - `ambry-admin`：只负责启动和装配，包含 `AmbryAdminApplication`、`application.yml` 和 `db/schema.sql`、`db/data-dict.sql`、`db/data-region.sql`。
+
+### 基础实体字段
+
+所有表实体继承 `BaseEntity`，包含：
+
+- `id`
+- `deleted`
+- `createBy`
+- `createByNo`
+- `createTime`
+- `updateBy`
+- `updateTime`
+
+`ambry-config` 中的 MyBatis Plus 自动填充处理器会在新增和更新时写入这些审计字段。
 
 ## 数据库设计
 
@@ -56,9 +72,10 @@ door-window-cabinet-mall
 2. 字典类型表（sys_dict_type）
 3. 字典项表（sys_dict_item）
 4. 商品表（goods）
-5. 用户表（mall_user）
-6. 订单表（mall_order）
-7. 订单项表（mall_order_item）
+5. 系统角色表（sys_role）
+6. 系统用户表（sys_user）
+7. 订单表（mall_order）
+8. 订单项表（mall_order_item）
 
 ## 快速开始
 

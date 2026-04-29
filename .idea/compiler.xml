@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ambry-admin" />
+        <module name="ambry-integration" />
         <module name="ambry-business" />
         <module name="ambry-config" />
         <module name="ambry-common" />
@@ -19,6 +20,7 @@
       <module name="ambry-business" options="-parameters" />
       <module name="ambry-common" options="-parameters" />
       <module name="ambry-config" options="-parameters" />
+      <module name="ambry-integration" options="-parameters" />
       <module name="springboot-ambry" options="" />
     </option>
   </component>

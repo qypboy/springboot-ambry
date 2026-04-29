@@ -1,0 +1,2 @@
+com\example\integration\sms\SmsClient.class
+com\example\integration\config\ThirdPartyFeignConfig.class

@@ -13,7 +13,11 @@ CREATE TABLE IF NOT EXISTS sys_region (
   enabled TINYINT NOT NULL DEFAULT 1,
   source VARCHAR(64),
   version VARCHAR(32),
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0,
   INDEX idx_region_parent(parent_code),
@@ -26,7 +30,11 @@ CREATE TABLE IF NOT EXISTS sys_dict_type (
   dict_name VARCHAR(128) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
   remark VARCHAR(255),
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0
 ) COMMENT='字典类型';
@@ -39,24 +47,48 @@ CREATE TABLE IF NOT EXISTS sys_dict_item (
   sort INT NOT NULL DEFAULT 0,
   status TINYINT NOT NULL DEFAULT 1,
   remark VARCHAR(255),
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0,
   UNIQUE KEY uk_dict_item(dict_code, item_value)
 ) COMMENT='字典项';
 
-CREATE TABLE IF NOT EXISTS mall_user (
+CREATE TABLE IF NOT EXISTS sys_role (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  role_code VARCHAR(64) NOT NULL UNIQUE,
+  role_name VARCHAR(128) NOT NULL,
+  sort INT NOT NULL DEFAULT 0,
+  enabled TINYINT NOT NULL DEFAULT 1,
+  remark VARCHAR(255),
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
+  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted INT NOT NULL DEFAULT 0
+) COMMENT='系统角色';
+
+CREATE TABLE IF NOT EXISTS sys_user (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(64) NOT NULL UNIQUE,
   password VARCHAR(128) NOT NULL,
   phone VARCHAR(32),
   address VARCHAR(255),
-  role VARCHAR(32) NOT NULL,
+  role VARCHAR(32) NOT NULL COMMENT '角色编码',
   enabled TINYINT NOT NULL DEFAULT 1,
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0
-) COMMENT='用户与员工';
+) COMMENT='系统用户';
 
 CREATE TABLE IF NOT EXISTS goods (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -68,7 +100,11 @@ CREATE TABLE IF NOT EXISTS goods (
   description TEXT,
   image_url VARCHAR(512),
   enabled TINYINT NOT NULL DEFAULT 1,
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0,
   INDEX idx_goods_category(category_code)
@@ -85,7 +121,11 @@ CREATE TABLE IF NOT EXISTS mall_order (
   receiver_region_code VARCHAR(32),
   receiver_region_name VARCHAR(512),
   receiver_address VARCHAR(255) NOT NULL,
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0,
   INDEX idx_order_user(user_id),
@@ -100,7 +140,11 @@ CREATE TABLE IF NOT EXISTS mall_order_item (
   price DECIMAL(12,2) NOT NULL,
   quantity INT NOT NULL,
   custom_options_json TEXT,
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
   create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0,
   INDEX idx_order_item_order(order_id)

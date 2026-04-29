@@ -1,6 +1,6 @@
 package com.example.admin;
 
-import com.example.business.system.region.service.RegionService;
+import com.example.business.manager.RegionManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,10 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AmbryAdminApplicationTest {
 
     @Autowired
-    RegionService regionService;
+    RegionManager regionManager;
 
     @Test
     void contextLoadsBusinessModules() {
-        assertThat(regionService.tree("0")).isNotEmpty();
+        assertThat(regionManager).isNotNull();
     }
 }

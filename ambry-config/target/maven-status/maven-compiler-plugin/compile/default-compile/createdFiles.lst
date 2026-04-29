@@ -1,8 +1,11 @@
 com\example\config\knife4j\Knife4jConfig.class
+com\example\config\mybatis\AuditMetaObjectHandler.class
 com\example\config\web\WebMvcConfig.class
+com\example\config\security\JwtTokenProvider.class
 com\example\config\security\SecurityProperties.class
 com\example\config\web\GlobalExceptionHandler.class
 com\example\config\file\FileStorageConfig.class
 com\example\config\security\SecurityConfig.class
 com\example\config\mybatis\MyBatisPlusConfig.class
 com\example\config\file\FileStorageProperties.class
+com\example\config\security\AuthInterceptor.class
