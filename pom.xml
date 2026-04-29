@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     
-    <groupId>com.example</groupId>
+    <groupId>com.ambry</groupId>
     <artifactId>springboot-ambry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -37,22 +37,22 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.example</groupId>
+                <groupId>com.ambry</groupId>
                 <artifactId>ambry-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.example</groupId>
+                <groupId>com.ambry</groupId>
                 <artifactId>ambry-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.example</groupId>
+                <groupId>com.ambry</groupId>
                 <artifactId>ambry-integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.example</groupId>
+                <groupId>com.ambry</groupId>
                 <artifactId>ambry-business</artifactId>
                 <version>${project.version}</version>
             </dependency>
