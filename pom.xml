@@ -10,9 +10,9 @@
     </parent>
     
     <groupId>com.example</groupId>
-    <artifactId>door-window-cabinet-mall</artifactId>
+    <artifactId>springboot-ambry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>door-window-cabinet-mall</name>
+    <name>springboot-ambry</name>
     <description>门窗橱柜定制商城系统</description>
     
     <properties>
