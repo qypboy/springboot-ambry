@@ -4,7 +4,8 @@ import com.ambry.business.service.UserService;
 import com.ambry.common.context.LoginUser;
 import com.ambry.common.entity.SysUserEntity;
 import com.ambry.common.enums.UserRoleEnum;
-import com.ambry.common.exception.BusinessException;
+import com.ambry.common.enums.CodeMessageEnum;
+import com.ambry.common.exception.CommonException;
 import com.ambry.common.model.request.LoginRequest;
 import com.ambry.common.model.request.RegisterRequest;
 import com.ambry.common.model.response.AuthResponse;
@@ -26,7 +27,7 @@ public class AuthManager {
     public AuthResponse login(LoginRequest request) {
         SysUserEntity user = userService.lambdaQuery().eq(SysUserEntity::getUsername, request.username()).one();
         if (user == null || !user.getPassword().equals(request.password())) {
-            throw new BusinessException("用户名或密码错误");
+            throw new CommonException(CodeMessageEnum.AUTH_INVALID_CREDENTIAL);
         }
         LoginUser loginUser = new LoginUser(user.getId(), user.getUsername(), user.getUsername(), user.getRole());
         return new AuthResponse(user.getId(), user.getUsername(), user.getRole(), jwtTokenProvider.createToken(loginUser));

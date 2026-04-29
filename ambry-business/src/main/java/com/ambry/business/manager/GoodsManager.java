@@ -1,12 +1,14 @@
 package com.ambry.business.manager;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ambry.business.service.GoodsService;
 import com.ambry.common.entity.GoodsEntity;
+import com.ambry.common.enums.CodeMessageEnum;
+import com.ambry.common.exception.CommonException;
 import com.ambry.common.model.PageRequest;
 import com.ambry.common.model.PageResponse;
 import com.ambry.common.model.request.GoodsSaveRequest;
 import com.ambry.common.model.response.GoodsResponse;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -42,7 +44,11 @@ public class GoodsManager {
     }
 
     public GoodsResponse detail(Long id) {
-        return toResponse(goodsService.getById(id));
+        GoodsEntity entity = goodsService.getById(id);
+        if (entity == null) {
+            throw new CommonException(CodeMessageEnum.GOODS_NOT_FOUND);
+        }
+        return toResponse(entity);
     }
 
     private GoodsResponse toResponse(GoodsEntity entity) {

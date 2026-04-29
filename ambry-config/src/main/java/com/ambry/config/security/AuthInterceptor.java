@@ -2,8 +2,9 @@ package com.ambry.config.security;
 
 import com.ambry.common.context.LoginUser;
 import com.ambry.common.context.UserContext;
+import com.ambry.common.enums.CodeMessageEnum;
 import com.ambry.common.enums.UserRoleEnum;
-import com.ambry.common.exception.BusinessException;
+import com.ambry.common.exception.CommonException;
 import com.ambry.common.security.RequireRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -50,7 +51,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         UserRoleEnum role = user.role();
         boolean allowed = Arrays.asList(requireRole.value()).contains(role);
         if (!allowed) {
-            throw new BusinessException("无权限访问");
+            throw new CommonException(CodeMessageEnum.AUTH_FORBIDDEN);
         }
     }
 }

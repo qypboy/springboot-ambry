@@ -1,0 +1,2 @@
+com\ambry\integration\config\ThirdPartyFeignConfig.class
+com\ambry\integration\sms\SmsClient.class

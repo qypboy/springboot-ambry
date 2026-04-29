@@ -1,8 +1,9 @@
 package com.ambry.config.security;
 
 import com.ambry.common.context.LoginUser;
+import com.ambry.common.enums.CodeMessageEnum;
 import com.ambry.common.enums.UserRoleEnum;
-import com.ambry.common.exception.BusinessException;
+import com.ambry.common.exception.CommonException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
@@ -29,12 +30,12 @@ public class JwtTokenProvider {
     public LoginUser parse(String token) {
         String[] parts = token == null ? new String[0] : token.split("\\.");
         if (parts.length != 2 || !sign(parts[0]).equals(parts[1])) {
-            throw new BusinessException("登录令牌无效");
+            throw new CommonException(CodeMessageEnum.AUTH_INVALID_TOKEN);
         }
         String payload = new String(Base64.getUrlDecoder().decode(parts[0]), StandardCharsets.UTF_8);
         String[] values = payload.split("\\|");
         if (values.length != 5 || Long.parseLong(values[4]) < Instant.now().getEpochSecond()) {
-            throw new BusinessException("登录令牌已过期");
+            throw new CommonException(CodeMessageEnum.AUTH_EXPIRED_TOKEN);
         }
         return new LoginUser(Long.parseLong(values[0]), values[1], values[2], UserRoleEnum.valueOf(values[3]));
     }

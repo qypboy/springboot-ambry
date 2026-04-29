@@ -1,0 +1,13 @@
+com\ambry\config\knife4j\Knife4jConfig.class
+com\ambry\config\i18n\I18nConfig.class
+com\ambry\config\security\SecurityConfig.class
+com\ambry\config\security\JwtTokenProvider.class
+com\ambry\config\file\FileStorageProperties.class
+com\ambry\config\mybatis\AuditMetaObjectHandler.class
+com\ambry\config\file\FileStorageConfig.class
+com\ambry\config\web\GlobalExceptionHandler.class
+com\ambry\config\mybatis\MyBatisPlusConfig.class
+com\ambry\config\security\AuthInterceptor.class
+com\ambry\config\i18n\I18nMessageResolver.class
+com\ambry\config\web\WebMvcConfig.class
+com\ambry\config\security\SecurityProperties.class
