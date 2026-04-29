@@ -33,41 +33,40 @@
 
 ```
 door-window-cabinet-mall
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com.example
-│   │   │       ├── config          # 配置类
-│   │   │       ├── controller      # 控制器
-│   │   │       ├── service         # 服务层接口
-│   │   │       ├── service.impl    # 服务层实现
-│   │   │       ├── mapper          # 数据访问层
-│   │   │       ├── entity          # 实体类
-│   │   │       ├── dto             # 数据传输对象
-│   │   │       ├── common          # 公共类
-│   │   │       └── utils           # 工具类
-│   │   └── resources
-│   │       ├── mapper              # MyBatis映射文件
-│   │       ├── db                  # 数据库脚本
-│   │       └── application.yml     # 配置文件
-└── pom.xml                         # Maven配置文件
+├── pom.xml                         # Maven父工程
+├── ambry-common                    # 实体、请求、返回、枚举、工具类、统一返回、异常
+├── ambry-config                    # 权限、Redis、MySQL、MyBatis、文件、跨域、Knife4j配置
+├── ambry-business                  # 核心业务接口、实现、Controller、Mapper、mapper.xml
+└── ambry-admin                     # 启动模块、application.yml、数据库初始化脚本
 ```
+
+当前后端仓库不包含前端代码，前端作为独立项目通过 REST API 访问后端。
+
+### 模块说明
+
+- `ambry-common`：统一存放实体、请求对象、返回对象、枚举、常量、工具类、统一返回和业务异常，不使用 `dto`、`vo` 包名。
+- `ambry-config`：统一存放全局配置，包括 MyBatis Plus、Mapper 扫描、跨域、文件上传、权限参数和 Knife4j。
+- `ambry-business`：按业务能力拆分 `system.region`、`system.dict`、`goods`、`pricing`、`order` 等包，Mapper XML 放在本模块 `src/main/resources/mapper/**`。
+- `ambry-admin`：只负责启动和装配，包含 `AmbryAdminApplication`、`application.yml` 和 `db/schema.sql`、`db/data-dict.sql`、`db/data-region.sql`。
 
 ## 数据库设计
 
 系统包含以下核心数据表：
-1. 商品表（product）
-2. 用户表（user）
-3. 订单表（order）
-4. 订单项表（order_item）
+1. 中国区域表（sys_region），支持省、市、区县、镇街、村
+2. 字典类型表（sys_dict_type）
+3. 字典项表（sys_dict_item）
+4. 商品表（goods）
+5. 用户表（mall_user）
+6. 订单表（mall_order）
+7. 订单项表（mall_order_item）
 
 ## 快速开始
 
 1. 确保已安装JDK 17、MySQL 8、Redis
-2. 执行`src/main/resources/db/schema.sql`创建数据库和表
-3. 修改`application.yml`中的数据库和Redis连接配置
+2. 依次执行`ambry-admin/src/main/resources/db/schema.sql`、`data-dict.sql`、`data-region.sql`创建表和初始化基础数据
+3. 修改`ambry-admin/src/main/resources/application.yml`中的数据库和Redis连接配置
 4. 使用Maven构建项目：`mvn clean install`
-5. 运行项目：`mvn spring-boot:run`
+5. 运行项目：`mvn -pl ambry-admin spring-boot:run`
 6. 访问API文档：http://localhost:8080/doc.html
 
 ## API文档
