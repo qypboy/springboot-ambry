@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS sys_region (
 CREATE TABLE IF NOT EXISTS sys_dict_type (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   dict_code VARCHAR(64) NOT NULL UNIQUE,
-  dict_name VARCHAR(128) NOT NULL,
+  dict_name_i18n_key VARCHAR(128) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
   remark VARCHAR(255),
   create_by VARCHAR(64),
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS sys_dict_item (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   dict_code VARCHAR(64) NOT NULL,
   item_value VARCHAR(64) NOT NULL,
-  item_label VARCHAR(128) NOT NULL,
+  item_label_i18n_key VARCHAR(128) NOT NULL,
   sort INT NOT NULL DEFAULT 0,
   status TINYINT NOT NULL DEFAULT 1,
   remark VARCHAR(255),
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS sys_dict_item (
 CREATE TABLE IF NOT EXISTS sys_role (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   role_code VARCHAR(64) NOT NULL UNIQUE,
-  role_name VARCHAR(128) NOT NULL,
+  role_name_i18n_key VARCHAR(128) NOT NULL,
   sort INT NOT NULL DEFAULT 0,
   enabled TINYINT NOT NULL DEFAULT 1,
   remark VARCHAR(255),
@@ -79,7 +79,6 @@ CREATE TABLE IF NOT EXISTS sys_user (
   password VARCHAR(128) NOT NULL,
   phone VARCHAR(32),
   address VARCHAR(255),
-  role VARCHAR(32) NOT NULL COMMENT '角色编码',
   enabled TINYINT NOT NULL DEFAULT 1,
   create_by VARCHAR(64),
   create_by_no VARCHAR(64),
@@ -89,6 +88,76 @@ CREATE TABLE IF NOT EXISTS sys_user (
   update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted INT NOT NULL DEFAULT 0
 ) COMMENT='系统用户';
+
+CREATE TABLE IF NOT EXISTS sys_menu (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  menu_code VARCHAR(64) NOT NULL UNIQUE,
+  menu_name_i18n_key VARCHAR(128) NOT NULL,
+  parent_code VARCHAR(64) NOT NULL DEFAULT 'ROOT',
+  permission_code VARCHAR(128),
+  route_path VARCHAR(255),
+  component_path VARCHAR(255),
+  icon VARCHAR(64),
+  menu_type VARCHAR(32) NOT NULL DEFAULT 'MENU',
+  sort INT NOT NULL DEFAULT 0,
+  enabled TINYINT NOT NULL DEFAULT 1,
+  remark VARCHAR(255),
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
+  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted INT NOT NULL DEFAULT 0,
+  INDEX idx_menu_parent(parent_code),
+  INDEX idx_menu_permission(permission_code)
+) COMMENT='系统菜单与权限点';
+
+CREATE TABLE IF NOT EXISTS sys_user_role (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  role_code VARCHAR(64) NOT NULL,
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
+  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted INT NOT NULL DEFAULT 0,
+  UNIQUE KEY uk_user_role(user_id, role_code),
+  INDEX idx_user_role_code(role_code)
+) COMMENT='用户角色关系';
+
+CREATE TABLE IF NOT EXISTS sys_role_menu (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  role_code VARCHAR(64) NOT NULL,
+  menu_code VARCHAR(64) NOT NULL,
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
+  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted INT NOT NULL DEFAULT 0,
+  UNIQUE KEY uk_role_menu(role_code, menu_code),
+  INDEX idx_role_menu_code(menu_code)
+) COMMENT='角色菜单关系';
+
+CREATE TABLE IF NOT EXISTS base_i18n (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  i18n_key VARCHAR(128) NOT NULL,
+  locale VARCHAR(16) NOT NULL,
+  i18n_value VARCHAR(255) NOT NULL,
+  remark VARCHAR(255),
+  create_by VARCHAR(64),
+  create_by_no VARCHAR(64),
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_by VARCHAR(64),
+  update_by_no VARCHAR(64),
+  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted INT NOT NULL DEFAULT 0,
+  UNIQUE KEY uk_i18n_key_locale(i18n_key, locale)
+) COMMENT='国际化文本表';
 
 CREATE TABLE IF NOT EXISTS goods (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,

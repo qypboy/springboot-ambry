@@ -1,11 +1,10 @@
 package com.ambry.business.controller;
 
 import com.ambry.business.manager.GoodsManager;
-import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.model.PageRequest;
 import com.ambry.common.model.request.GoodsSaveRequest;
 import com.ambry.common.result.Result;
-import com.ambry.common.security.RequireRole;
+import com.ambry.common.security.RequirePermission;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +34,8 @@ public class GoodsController {
         return Result.success(goodsManager.detail(id));
     }
 
-    @RequireRole({UserRoleEnum.ADMIN, UserRoleEnum.STAFF})
     @Operation(summary = "保存商品", description = "新增商品")
+    @RequirePermission({"goods:save"})
     @PostMapping
     public Result<?> save(@RequestBody GoodsSaveRequest request) {
         return Result.success(goodsManager.save(request));

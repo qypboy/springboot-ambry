@@ -17,8 +17,8 @@ public class SysDictTypeEntity extends BaseEntity {
     private Long id;
     @Schema(description = "字典编码")
     private String dictCode;
-    @Schema(description = "字典名称")
-    private String dictName;
+    @Schema(description = "字典名称i18nKey")
+    private String dictNameI18nKey;
     @Schema(description = "状态")
     private Integer status;
     @Schema(description = "备注")

@@ -3,9 +3,9 @@ package com.ambry.config.security;
 import com.ambry.common.context.LoginUser;
 import com.ambry.common.context.UserContext;
 import com.ambry.common.enums.CodeMessageEnum;
-import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.exception.CommonException;
-import com.ambry.common.security.RequireRole;
+import com.ambry.common.security.PermissionChecker;
+import com.ambry.common.security.RequirePermission;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -17,9 +17,11 @@ import java.util.Arrays;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
     private final JwtTokenProvider jwtTokenProvider;
+    private final PermissionChecker permissionChecker;
 
-    public AuthInterceptor(JwtTokenProvider jwtTokenProvider) {
+    public AuthInterceptor(JwtTokenProvider jwtTokenProvider, PermissionChecker permissionChecker) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.permissionChecker = permissionChecker;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             UserContext.set(jwtTokenProvider.parse(header.substring(7)));
         }
         if (handler instanceof HandlerMethod handlerMethod) {
-            checkRole(handlerMethod);
+            checkPermission(handlerMethod);
         }
         return true;
     }
@@ -39,17 +41,19 @@ public class AuthInterceptor implements HandlerInterceptor {
         UserContext.clear();
     }
 
-    private void checkRole(HandlerMethod handlerMethod) {
-        RequireRole requireRole = handlerMethod.getMethodAnnotation(RequireRole.class);
-        if (requireRole == null) {
-            requireRole = handlerMethod.getBeanType().getAnnotation(RequireRole.class);
+    private void checkPermission(HandlerMethod handlerMethod) {
+        RequirePermission requirePermission = handlerMethod.getMethodAnnotation(RequirePermission.class);
+        if (requirePermission == null) {
+            requirePermission = handlerMethod.getBeanType().getAnnotation(RequirePermission.class);
         }
-        if (requireRole == null) {
+        if (requirePermission == null) {
             return;
         }
         LoginUser user = UserContext.get();
-        UserRoleEnum role = user.role();
-        boolean allowed = Arrays.asList(requireRole.value()).contains(role);
+        if (user == null || user.userId() == null || user.userId() <= 0) {
+            throw new CommonException(CodeMessageEnum.AUTH_FORBIDDEN);
+        }
+        boolean allowed = permissionChecker.hasAnyPermission(user.userId(), Arrays.asList(requirePermission.value()));
         if (!allowed) {
             throw new CommonException(CodeMessageEnum.AUTH_FORBIDDEN);
         }

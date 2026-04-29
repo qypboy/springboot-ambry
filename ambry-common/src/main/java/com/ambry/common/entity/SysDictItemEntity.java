@@ -19,8 +19,8 @@ public class SysDictItemEntity extends BaseEntity {
     private String dictCode;
     @Schema(description = "字典值")
     private String itemValue;
-    @Schema(description = "字典标签")
-    private String itemLabel;
+    @Schema(description = "字典标签i18nKey")
+    private String itemLabelI18nKey;
     @Schema(description = "排序")
     private Integer sort;
     @Schema(description = "状态")

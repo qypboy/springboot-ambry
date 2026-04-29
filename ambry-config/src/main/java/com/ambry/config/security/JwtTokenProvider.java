@@ -2,7 +2,6 @@ package com.ambry.config.security;
 
 import com.ambry.common.context.LoginUser;
 import com.ambry.common.enums.CodeMessageEnum;
-import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.exception.CommonException;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +10,8 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
@@ -21,7 +22,8 @@ public class JwtTokenProvider {
     }
 
     public String createToken(LoginUser user) {
-        String payload = user.userId() + "|" + user.username() + "|" + user.userNo() + "|" + user.role() + "|" +
+        String roleCodes = user.roleCodes() == null ? "" : user.roleCodes().stream().collect(Collectors.joining(","));
+        String payload = user.userId() + "|" + user.username() + "|" + user.userNo() + "|" + roleCodes + "|" +
                 (Instant.now().getEpochSecond() + properties.getExpireSeconds());
         String encoded = Base64.getUrlEncoder().withoutPadding().encodeToString(payload.getBytes(StandardCharsets.UTF_8));
         return encoded + "." + sign(encoded);
@@ -37,7 +39,8 @@ public class JwtTokenProvider {
         if (values.length != 5 || Long.parseLong(values[4]) < Instant.now().getEpochSecond()) {
             throw new CommonException(CodeMessageEnum.AUTH_EXPIRED_TOKEN);
         }
-        return new LoginUser(Long.parseLong(values[0]), values[1], values[2], UserRoleEnum.valueOf(values[3]));
+        List<String> roleCodes = values[3].isBlank() ? List.of() : List.of(values[3].split(","));
+        return new LoginUser(Long.parseLong(values[0]), values[1], values[2], roleCodes);
     }
 
     private String sign(String payload) {

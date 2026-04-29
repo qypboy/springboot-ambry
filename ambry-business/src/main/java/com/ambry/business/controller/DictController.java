@@ -1,10 +1,9 @@
 package com.ambry.business.controller;
 
 import com.ambry.business.manager.DictManager;
-import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.model.request.DictSaveRequest;
 import com.ambry.common.result.Result;
-import com.ambry.common.security.RequireRole;
+import com.ambry.common.security.RequirePermission;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +24,8 @@ public class DictController {
         return Result.success(dictManager.listItems(dictCode));
     }
 
-    @RequireRole({UserRoleEnum.ADMIN, UserRoleEnum.STAFF})
     @Operation(summary = "保存字典项", description = "新增字典项")
+    @RequirePermission({"system:dict:write"})
     @PostMapping("/items")
     public Result<?> saveItem(@RequestBody DictSaveRequest request) {
         return Result.success(dictManager.saveItem(request));

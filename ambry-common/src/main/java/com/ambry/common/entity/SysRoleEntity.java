@@ -17,8 +17,8 @@ public class SysRoleEntity extends BaseEntity {
     private Long id;
     @Schema(description = "角色编码")
     private String roleCode;
-    @Schema(description = "角色名称")
-    private String roleName;
+    @Schema(description = "角色名称i18nKey")
+    private String roleNameI18nKey;
     @Schema(description = "排序")
     private Integer sort;
     @Schema(description = "是否启用")
