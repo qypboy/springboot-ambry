@@ -1,7 +1,7 @@
 package com.ambry.config.security;
 
 import com.ambry.common.context.LoginUser;
-import com.ambry.common.enums.UserRole;
+import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.exception.BusinessException;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class JwtTokenProvider {
         if (values.length != 5 || Long.parseLong(values[4]) < Instant.now().getEpochSecond()) {
             throw new BusinessException("登录令牌已过期");
         }
-        return new LoginUser(Long.parseLong(values[0]), values[1], values[2], UserRole.valueOf(values[3]));
+        return new LoginUser(Long.parseLong(values[0]), values[1], values[2], UserRoleEnum.valueOf(values[3]));
     }
 
     private String sign(String payload) {

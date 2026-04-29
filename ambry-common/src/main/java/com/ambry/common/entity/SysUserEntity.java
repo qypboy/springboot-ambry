@@ -3,7 +3,7 @@ package com.ambry.common.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.ambry.common.enums.UserRole;
+import com.ambry.common.enums.UserRoleEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +25,7 @@ public class SysUserEntity extends BaseEntity {
     @Schema(description = "地址")
     private String address;
     @Schema(description = "角色编码")
-    private UserRole role;
+    private UserRoleEnum role;
     @Schema(description = "是否启用")
     private Integer enabled;
 }

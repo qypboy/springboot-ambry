@@ -1,7 +1,7 @@
 package com.ambry.business.controller;
 
 import com.ambry.business.manager.RegionManager;
-import com.ambry.common.enums.RegionLevel;
+import com.ambry.common.enums.RegionLevelEnum;
 import com.ambry.common.model.request.RegionQueryRequest;
 import com.ambry.common.result.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +21,7 @@ public class RegionController {
     @Operation(summary = "区域列表", description = "按父级、层级、关键字查询区域")
     @GetMapping
     public Result<?> list(@RequestParam(required = false) String parentCode,
-                          @RequestParam(required = false) RegionLevel level,
+                          @RequestParam(required = false) RegionLevelEnum level,
                           @RequestParam(required = false) String keyword) {
         return Result.success(regionManager.list(new RegionQueryRequest(parentCode, level, keyword)));
     }

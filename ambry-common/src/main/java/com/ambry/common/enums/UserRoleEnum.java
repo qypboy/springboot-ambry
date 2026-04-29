@@ -1,6 +1,6 @@
 package com.ambry.common.enums;
 
-public enum UserRole {
+public enum UserRoleEnum {
     ADMIN,
     STAFF,
     CUSTOMER

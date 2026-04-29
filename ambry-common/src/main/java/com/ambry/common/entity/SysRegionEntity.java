@@ -3,7 +3,7 @@ package com.ambry.common.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.ambry.common.enums.RegionLevel;
+import com.ambry.common.enums.RegionLevelEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +23,7 @@ public class SysRegionEntity extends BaseEntity {
     @Schema(description = "区域名称")
     private String name;
     @Schema(description = "区域级别")
-    private RegionLevel level;
+    private RegionLevelEnum level;
     @Schema(description = "完整名称")
     private String fullName;
     @Schema(description = "路径")

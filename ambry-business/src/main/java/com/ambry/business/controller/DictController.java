@@ -1,7 +1,7 @@
 package com.ambry.business.controller;
 
 import com.ambry.business.manager.DictManager;
-import com.ambry.common.enums.UserRole;
+import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.model.request.DictSaveRequest;
 import com.ambry.common.result.Result;
 import com.ambry.common.security.RequireRole;
@@ -25,7 +25,7 @@ public class DictController {
         return Result.success(dictManager.listItems(dictCode));
     }
 
-    @RequireRole({UserRole.ADMIN, UserRole.STAFF})
+    @RequireRole({UserRoleEnum.ADMIN, UserRoleEnum.STAFF})
     @Operation(summary = "保存字典项", description = "新增字典项")
     @PostMapping("/items")
     public Result<?> saveItem(@RequestBody DictSaveRequest request) {

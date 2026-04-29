@@ -1,7 +1,7 @@
 package com.ambry.business.controller;
 
 import com.ambry.business.manager.GoodsManager;
-import com.ambry.common.enums.UserRole;
+import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.model.PageRequest;
 import com.ambry.common.model.request.GoodsSaveRequest;
 import com.ambry.common.result.Result;
@@ -35,7 +35,7 @@ public class GoodsController {
         return Result.success(goodsManager.detail(id));
     }
 
-    @RequireRole({UserRole.ADMIN, UserRole.STAFF})
+    @RequireRole({UserRoleEnum.ADMIN, UserRoleEnum.STAFF})
     @Operation(summary = "保存商品", description = "新增商品")
     @PostMapping
     public Result<?> save(@RequestBody GoodsSaveRequest request) {

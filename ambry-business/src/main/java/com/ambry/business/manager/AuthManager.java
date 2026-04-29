@@ -3,7 +3,7 @@ package com.ambry.business.manager;
 import com.ambry.business.service.UserService;
 import com.ambry.common.context.LoginUser;
 import com.ambry.common.entity.SysUserEntity;
-import com.ambry.common.enums.UserRole;
+import com.ambry.common.enums.UserRoleEnum;
 import com.ambry.common.exception.BusinessException;
 import com.ambry.common.model.request.LoginRequest;
 import com.ambry.common.model.request.RegisterRequest;
@@ -38,7 +38,7 @@ public class AuthManager {
         user.setPassword(request.password());
         user.setPhone(request.phone());
         user.setAddress(request.address());
-        user.setRole(UserRole.CUSTOMER);
+        user.setRole(UserRoleEnum.CUSTOMER);
         user.setEnabled(1);
         userService.save(user);
         LoginUser loginUser = new LoginUser(user.getId(), user.getUsername(), user.getUsername(), user.getRole());

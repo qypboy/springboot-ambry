@@ -1,6 +1,6 @@
 package com.ambry.common.enums;
 
-public enum OrderStatus {
+public enum OrderStatusEnum {
     WAIT_CONFIRM,
     WAIT_PAY,
     PRODUCING,

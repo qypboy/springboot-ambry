@@ -1,6 +1,6 @@
 package com.ambry.common.enums;
 
-public enum RegionLevel {
+public enum RegionLevelEnum {
     PROVINCE,
     CITY,
     DISTRICT,

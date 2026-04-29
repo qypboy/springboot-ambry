@@ -3,7 +3,7 @@ package com.ambry.common.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.ambry.common.enums.OrderStatus;
+import com.ambry.common.enums.OrderStatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +25,7 @@ public class MallOrderEntity extends BaseEntity {
     @Schema(description = "总金额")
     private BigDecimal totalAmount;
     @Schema(description = "订单状态")
-    private OrderStatus status;
+    private OrderStatusEnum status;
     @Schema(description = "收货人")
     private String receiverName;
     @Schema(description = "收货电话")

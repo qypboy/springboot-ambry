@@ -7,7 +7,7 @@ import com.ambry.business.service.OrderService;
 import com.ambry.common.entity.GoodsEntity;
 import com.ambry.common.entity.MallOrderEntity;
 import com.ambry.common.entity.MallOrderItemEntity;
-import com.ambry.common.enums.OrderStatus;
+import com.ambry.common.enums.OrderStatusEnum;
 import com.ambry.common.model.request.OrderCreateRequest;
 import com.ambry.common.model.response.OrderResponse;
 import com.ambry.common.util.OrderNoUtil;
@@ -34,7 +34,7 @@ public class OrderManager {
         MallOrderEntity order = new MallOrderEntity();
         order.setOrderNo(OrderNoUtil.next());
         order.setUserId(request.userId());
-        order.setStatus(OrderStatus.WAIT_CONFIRM);
+        order.setStatus(OrderStatusEnum.WAIT_CONFIRM);
         order.setReceiverName(request.receiverName());
         order.setReceiverPhone(request.receiverPhone());
         order.setReceiverRegionCode(request.receiverRegionCode());
