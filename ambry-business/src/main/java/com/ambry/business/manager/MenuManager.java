@@ -1,7 +1,6 @@
 package com.ambry.business.manager;
 
 import com.ambry.business.service.MenuService;
-import com.ambry.common.i18n.I18nLookup;
 import com.ambry.common.model.response.MenuResponse;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;

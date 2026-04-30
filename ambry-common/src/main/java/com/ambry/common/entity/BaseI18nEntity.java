@@ -1,27 +1,46 @@
 package com.ambry.common.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.transsion.mps.util.i18n.enums.I18nModuleEnum;
+import com.transsion.mps.util.i18n.enums.LanguageEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 @TableName("base_i18n")
-@Schema(description = "国际化文本实体")
+@EqualsAndHashCode(callSuper = true)
 public class BaseI18nEntity extends BaseEntity {
-    @TableId(type = IdType.AUTO)
-    @Schema(description = "主键ID")
-    private Long id;
-    @Schema(description = "国际化key")
-    private String i18nKey;
-    @Schema(description = "语言")
-    private String locale;
-    @Schema(description = "国际化值")
-    private String i18nValue;
-    @Schema(description = "备注")
-    private String remark;
-}
 
+    /**
+     * 主键id
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 模块
+     */
+    private I18nModuleEnum module;
+
+    /**
+     * 键
+     */
+    @TableField(value = "`key`")
+    private Long key;
+
+    /**
+     * 值
+     */
+    private String value;
+
+    /**
+     * 语言
+     */
+    private LanguageEnum language;
+}

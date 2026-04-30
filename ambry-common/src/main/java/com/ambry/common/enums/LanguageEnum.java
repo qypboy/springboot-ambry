@@ -1,4 +1,4 @@
-package com.ambry.common.enums;
+package com.transsion.mps.util.i18n.enums;
 
 
 import cn.hutool.core.util.StrUtil;

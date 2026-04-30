@@ -1,7 +1,6 @@
 package com.ambry.business.manager;
 
 import com.ambry.business.service.DictItemService;
-import com.ambry.common.i18n.I18nLookup;
 import com.ambry.common.entity.SysDictItemEntity;
 import com.ambry.common.model.request.DictSaveRequest;
 import com.ambry.common.model.response.DictItemResponse;
