@@ -1,6 +1,7 @@
 package com.ambry.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 
 public enum I18nModuleEnum implements EnumInterface<Integer> {
